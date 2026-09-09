@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  node1:
+    build: ..
+    container_name: kv-node1
+    ports:
+      - "7001:7000"
+    volumes:
+      - node1-data:/data
+      - ./cluster.conf:/etc/kv-store/cluster.conf
+    command: ["--host", "0.0.0.0", "--port", "7000", "--data-dir", "/data",
+              "--cluster-config", "/etc/kv-store/cluster.conf", "--node-id", "node1"]
+
+  node2:
+    build: ..
+    container_name: kv-node2
+    ports:
+      - "7002:7000"
+    volumes:
+      - node2-data:/data
+      - ./cluster.conf:/etc/kv-store/cluster.conf
+    command: ["--host", "0.0.0.0", "--port", "7000", "--data-dir", "/data",
+              "--cluster-config", "/etc/kv-store/cluster.conf", "--node-id", "node2"]
+
+  node3:
+    build: ..
+    container_name: kv-node3
+    ports:
+      - "7003:7000"
+    volumes:
+      - node3-data:/data
+      - ./cluster.conf:/etc/kv-store/cluster.conf
+    command: ["--host", "0.0.0.0", "--port", "7000", "--data-dir", "/data",
+              "--cluster-config", "/etc/kv-store/cluster.conf", "--node-id", "node3"]
+
+volumes:
+  node1-data:
+  node2-data:
+  node3-data:
